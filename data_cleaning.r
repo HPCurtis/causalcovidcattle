@@ -34,3 +34,17 @@ df_og$Date <- as.Date(df_og$Date, origin = "1899-12-30")
 
 df_sa$Date <- as.numeric(df_og$Date)
 df_sa$Date <- as.Date(df_og$Date, origin = "1899-12-30")
+
+
+if (!file.exists("cattle_og.csv")) {
+  write.csv(df_og, file = "cattle_og.csv")
+}else {
+  print("file exists")
+}
+
+if (!file.exists("cattle_sa.csv")) {
+  write.csv(df_sa, file = "cattle_sa.csv")
+}else {
+  print("file exists")
+}
+
