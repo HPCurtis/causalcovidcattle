@@ -31,3 +31,6 @@ df_sa <- df_sa[-(1:9), ]
 # Convert to serial numbers to date values.
 df_og$Date <- as.numeric(df_og$Date)
 df_og$Date <- as.Date(df_og$Date, origin = "1899-12-30")
+
+df_sa$Date <- as.numeric(df_og$Date)
+df_sa$Date <- as.Date(df_og$Date, origin = "1899-12-30")

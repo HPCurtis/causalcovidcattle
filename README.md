@@ -1,1 +1,2 @@
-# Causal impact of Covid Cattle on Australian livestock slaughter 
+# Causal impact of Covid on Australian Cattle livestock slaughter numbers
+ 
