@@ -13,9 +13,6 @@ df <- readxl::read_excel("cattle.xlsx", sheet = "Data1")
 # add Data tile to dataframe column relvenat
 df <- df %>% rename(Date = ...1 )
 
-# Rmove whitesapce and irrelevant numbers from columns names
-names(df) <- gsub("[[:space:][:punct:][:digit:]]", "", names(df))
-
 # Extract row to which identify 
 identifier_row <- df[2, ]
 
@@ -37,6 +34,10 @@ df_og$Date <- as.Date(df_og$Date, origin = "1899-12-30")
 
 df_sa$Date <- as.numeric(df_og$Date)
 df_sa$Date <- as.Date(df_og$Date, origin = "1899-12-30")
+
+# Rmove whitesapce and irrelevant numbers from columns names
+names(df_og) <- gsub("[[:space:][:punct:][:digit:]]", "", names(df_og))
+names(df_sa) <- gsub("[[:space:][:punct:][:digit:]]", "", names(df_sa))
 
 if (!file.exists("cattle_og.csv")) {
   write.csv(df_og, file = "cattle_og.csv", row.names = FALSE)
