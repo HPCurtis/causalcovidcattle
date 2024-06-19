@@ -32,7 +32,14 @@ ggplot(df_sa, aes(x = Date, y = NumberSlaughteredCATTLEexclcalvesTotalState)) +
        y = "Number of Slaughtered Cattle") +
   theme_minimal()
 
-# 
-fit <- as_tsibble(df_sa[,1:2]) |>
+# Fit forecast model for seasonaly adjusted model.
+fit <- df_og |>
   model(trend_model = TSLM(NumberSlaughteredCATTLEexclcalvesTotalState ~ trend()))
-fit |> forecast(h = "9 months")
+
+fit |> forecast(h = 10) |> autoplot(df_og)
+
+# Fit forecast model for seasonaly adjusted model.
+fitlinear <- df_sa |>
+  model(trend_model = TSLM(NumberSlaughteredCATTLEexclcalvesTotalState ~ trend()))
+
+plinear <-fitlinear |> forecast(h = 10) |> autoplot(df_sa)
