@@ -8,12 +8,23 @@ df_sa <- read.csv("https://raw.githubusercontent.com/HPCurtis/causalcovidcattle/
 df_og$Date <- as.Date(df_og$Date)
 df_sa$Date <- as.Date(df_sa$Date)
 
-df_sa <- drop_na(df_sa)
+#df_sa <- drop_na(df_sa)
 
 # Visualisations for the project
-ggplot(df_sa, aes(x = Date, y = Number.Slaughtered....CATTLE..excl..calves.....Total..State......11)) +
+
+# Visualise timeseries oforiginal total number of cattle slaughtered.
+ggplot(df_sa, aes(x = Date, y = NumberSlaughteredCATTLEexclcalvesTotalState)) +
   geom_line(color = "blue") +
   labs(title = "Time Series Plot",
        x = "Date",
        y = "Number of Slaughtered Cattle (excl claves)") +
   theme_minimal()
+
+# Visualise timeseries of seasonally adjsuted total number of cattle slaughtered.
+ggplot(df_sa, aes(x = Date, y = NumberSlaughteredCATTLEexclcalvesTotalState)) +
+  geom_line(color = "blue") +
+  labs(title = "Time Series Plot",
+       x = "Date",
+       y = "Number of Slaughtered Cattle (excl claves)") +
+  theme_minimal()
+

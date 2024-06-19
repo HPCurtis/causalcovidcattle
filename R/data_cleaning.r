@@ -13,7 +13,7 @@ df <- readxl::read_excel("cattle.xlsx", sheet = "Data1")
 # add Data tile to dataframe column relvenat
 df <- df %>% rename(Date = ...1 )
 
-# Rmove whitesapce from columns names
+# Rmove whitesapce and irrelevant numbers from columns names
 names(df) <- gsub("[[:space:][:punct:][:digit:]]", "", names(df))
 
 # Extract row to which identify 
