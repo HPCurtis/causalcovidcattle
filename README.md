@@ -3,22 +3,22 @@
 ## Background and Overview
 The following analysis is investigation into whether Covid had any potential causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series quasi-experimental methodology to analyse whether the number of cattle slaughtered was impacted by the Covid-19 pandemic. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis packages that are simple brilliant.
 
-## Analaysis
+## Analysis
 
 ### Data splitting
 ```
-#Pre/Post Covid----
 pre_covid <- df_sa %>%
   drop_na() %>%
   filter(Date < ymd("2020-03-01")) %>%
   mutate(Date = yearquarter(Date)) %>%
-  as_tsibble( index = Date)
+  as_tsibble(index = Date)
 
 post_covid <- df_sa %>%
   drop_na() %>%
   filter(Date >=  ymd("2020-03-01") )%>%
   mutate(Date = yearquarter(Date)) %>%
-  as_tsibble( index = Date)
+  as_tsibble(index = Date)
+
 ```
 The code above shows that to conduct the analysis here the data had to be split between pre and post Covid the date 
 
@@ -38,12 +38,32 @@ fc <- fitlinear %>%
 ```
 As the code above shows the timeseries model applied to the timeseries data was a linear model.
 
+## Causal impact calculations
+```
+#Calculate Causal impact----
+yhat <- fc$.mean
+yhatupper <- fc$`95%`$upper
+yhatlower <- fc$`95%`$lower
+
+# Calculate mean and lower and upper bounds
+Totalslaughteredimpact <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhat 
+Totalslaughteredimpactupper <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhatupper 
+Totalslaughteredimpactlower <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhatlower
+
+# Estimate impact of Covid-19 over the forecast-able period.
+totalmean <- sum(Totalslaughteredimpact)
+totalupper <- sum(Totalslaughteredimpactupper)
+totallower <- sum(Totalslaughteredimpactlower)
+```
+To calculate the causal impact 
+
 ## Plots
 
 ![a](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/linearforecast.png?raw=true)
 
 ![t](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/causal_impact.png?raw=true)
 
+## Real world impacts
 
 ## References
 
