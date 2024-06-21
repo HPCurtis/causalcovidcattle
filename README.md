@@ -1,7 +1,7 @@
 # Causal impact of Covid on Australian Cattle livestock slaughter numbers
 
 ## Background and Overview
-The following analysis is investigation into whether Covid had any potential causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series quasi-experimental methodology to analyse whether the number of cattle slaughtered was impacted by the Covid-19 pandemic. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis packages that are simple brilliant.
+The following analysis is investigation into whether Covid had any potential causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to analyse whether the number of cattle slaughtered was impacted by the Covid-19 pandemic. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis packages that are simple brilliant.
 
 ## Analysis
 
@@ -41,7 +41,7 @@ fc <- fitlinear %>%
   hilo()
 
 ```
-As the code above shows the timeseries model applied to the timeseries data was a linear model.his a simple example of an ITS analysis similar to that applied by the CausalPy package. As noted in their documentation more complex timeseries models can be applied to these anlayses. Non of these are applied here as the analysis is being conducted of the seasonally adjusted data provided by the ABS and the focus of the analysis as such can be on modleling just the trend of the data and the causal impact of covid on this overall trend.  
+As the code above shows the timeseries model applied to the timeseries data was a linear model. This a simple example of an ITS analysis similar to that applied by the CausalPy package. As noted in their documentation more complex timeseries models can be applied in ITS anlaysis. Non of these are applied here as the analysis is being conducted on the seasonally adjusted data provided by the ABS. Seasonal adjjustments are very common with timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting varaiblity that in specific cases in not the focus of an analysis. This is the case with current analysis because we are interested in estimating a causal effect of Covid-19  ont he the number of cattle slaughtered acroos all Autralian States combined. so by extating seasonal variablity we are focusing on modelling the overall trend of the data and the causal impact of covid on this overall trend. Therfore a linear model is approriate for this estiamtion task.
 
 ![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/timeseries.png?raw=true)
 Fig 1: 
@@ -54,12 +54,12 @@ Fig 1:
 
 ## Causal impact calculations
 ```
-#Calculate Causal impact----
+# Calculate Causal impact----
 yhat <- fc$.mean
 yhatupper <- fc$`95%`$upper
 yhatlower <- fc$`95%`$lower
 
-# Calculate mean and lower and upper bounds
+# Calculate the mean and lower and upper bounds
 Totalslaughteredimpact <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhat 
 Totalslaughteredimpactupper <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhatupper 
 Totalslaughteredimpactlower <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhatlower
