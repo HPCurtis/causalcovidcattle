@@ -84,10 +84,9 @@ causal_impact_plot <- ggplot() +
     axis.title = element_text(size = 8),       # Axis titles font size
     axis.text = element_text(size = 7)         # Axis text font size
   ) +
-  geom_vline(xintercept = as.Date("2020-03-01"), color = "red", linetype = "dashed") +
-  theme_minimal()
+  geom_vline(xintercept = as.Date("2020-03-01"), color = "red", linetype = "dashed") 
 
-# Save plots out-----
+  # Save plots out-----
 ggsave(filename = "/home/harrison/Desktop/gitHubRepos/cattlecovidcausal/img/linearforecast.png",
        plot = plinear, width = 6, height = 4, units = "in", dpi = 300)
 ggsave(filename = "/home/harrison/Desktop/gitHubRepos/cattlecovidcausal/img/causal_impact.png",
