@@ -1,8 +1,10 @@
 # Causal impact of Covid on Australian Cattle livestock slaughter numbers
 
 ## Background and Overview
-The following analysis is investigation into whether Covid had any potential causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to analyse whether the number of cattle slaughtered was impacted by the Covid-19 pandemic. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis packages that are simple brilliant.
+The following analysis is investigation into whether Covid had any potential causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to analyse whether the number of cattle slaughtered was impacted by the Covid-19 pandemic. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis R packages that are simple brilliant.
 
+## Data collection and cleaning.
+The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data collected is the number of slaughtered cattle excluding calves from each Austalian state with a total count also.
 ## Analysis
 
 ### Data splitting
@@ -25,7 +27,7 @@ post_covid <- df_sa %>%
   mutate(Date = yearquarter(Date)) %>%
   as_tsibble(index = Date)
 ```
-The R code above shows that to conduct the analysis here the data had to be split between pre and post Covid-19 0n the date of 2020-03-01 within the data avaible from the ABS
+The R code above shows that to conduct the analysis here the data had to be split between pre and post Covid-19. The date of 2020-03-01 was the date selected to be in line with Australias Covid lockdowns (March 23, 2020) and the fidelity of sampling within the data collected by the ABS.
 
 ### Modelling
 
@@ -33,24 +35,30 @@ The R code above shows that to conduct the analysis here the data had to be spli
 # Fit linear model for seasonal adjusted data.
 fitlinear <- pre_covid |>
   model(trend_model = TSLM(NumberSlaughteredCATTLEexclcalvesTotalState ~ trend()))
-
-# Generate forecasts for the post-covid period.
-fc <- fitlinear %>%
-  forecast(h = nrow(post_covid)) %>%
-  # Get forecast intervals
-  hilo()
-
 ```
-As the code above shows the timeseries model applied to the timeseries data was a linear model. This a simple example of an ITS analysis similar to that applied by the CausalPy package. As noted in their documentation more complex timeseries models can be applied in ITS anlaysis. Non of these are applied here as the analysis is being conducted on the seasonally adjusted data provided by the ABS. Seasonal adjjustments are very common with timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting varaiblity that in specific cases in not the focus of an analysis. This is the case with current analysis because we are interested in estimating a causal effect of Covid-19  ont he the number of cattle slaughtered acroos all Autralian States combined. so by extating seasonal variablity we are focusing on modelling the overall trend of the data and the causal impact of covid on this overall trend. Therfore a linear model is approriate for this estiamtion task.
+As the code above shows the timeseries model applied to the timeseries data was a linear model. This a simple example of an ITS analysis similar to that applied within the CausalPy package. As noted in their documentation more complex timeseries models can be applied to ITS anlayses. Non of these are applied here as the analysis is being conducted on the seasonally adjusted data provided by the ABS. Seasonal adjustments are very common within timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting varaiblity that in specific cases is not the focus of the analysis. This is the case with current analysis because we are interested in estimating a causal effect of Covid-19 on the total the number of cattle slaughtered across all Autralian States combined. So, by extracting seasonal variablity we are focusing on modelling the overall trend of the data and the causal impact of Covid-19 on this overall trend. Therefore, a linear model is approriate for this estimation task. The assumption of linearity might be potentially a strong one, but added complexity of non-linear models does not appear neccesary based on viewing the data in Fig 1. As the seasonally adjusted data shows the general overall increase in the number of cattle slaughtered through time that coicides with generally increased size and productivity of the cattle industry within Australia through time. 
 
 ![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/timeseries.png?raw=true)
 Fig 1: 
 
-## Plots
+## Forecasts
+```
+# Generate forecasts for the post-covid period.
+
+fc <- fitlinear %>%
+  forecast(h = nrow(post_covid)) %>%
+  # Get forecast intervals
+  hilo()
+```
+
+Forecast values were generated to the length of number of avaible data points Post-Covid within the data. This was for 16 Quarters, so, three years post Covid-19
 
 ![a](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/linearforecast.png?raw=true)
+Fig 2:
+
 
 ![t](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/causal_impact.png?raw=true)
+Fig 3:
 
 ## Causal impact calculations
 ```
