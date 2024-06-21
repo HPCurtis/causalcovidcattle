@@ -6,21 +6,26 @@ The following analysis is investigation into whether Covid had any potential cau
 ## Analysis
 
 ### Data splitting
-```
+```{r}
+# Convert to date form.
+df_sa$Date <- as.Date(df_sa$Date) 
+
+df_sa <- df_sa %>% drop_na() %>% 
+  as_tsibble( index = Date) %>% 
+  mutate(Date = yearquarter(Date)) 
+
+#Pre/Post Covid----
 pre_covid <- df_sa %>%
-  drop_na() %>%
-  filter(Date < ymd("2020-03-01")) %>%
+  filter(Date < yearquarter("2020 Q2")) %>%
   mutate(Date = yearquarter(Date)) %>%
   as_tsibble(index = Date)
 
 post_covid <- df_sa %>%
-  drop_na() %>%
-  filter(Date >=  ymd("2020-03-01") )%>%
+  filter(Date >=   yearquarter("2020 Q2"))%>%
   mutate(Date = yearquarter(Date)) %>%
   as_tsibble(index = Date)
-
 ```
-The code above shows that to conduct the analysis here the data had to be split between pre and post Covid the date 
+The R code above shows that to conduct the analysis here the data had to be split between pre and post Covid-19 0n the date of 2020-03-01 within the data avaible from the ABS
 
 ### Modelling
 
@@ -36,7 +41,16 @@ fc <- fitlinear %>%
   hilo()
 
 ```
-As the code above shows the timeseries model applied to the timeseries data was a linear model.
+As the code above shows the timeseries model applied to the timeseries data was a linear model.his a simple example of an ITS analysis similar to that applied by the CausalPy package. As noted in their documentation more complex timeseries models can be applied to these anlayses. Non of these are applied here as the analysis is being conducted of the seasonally adjusted data provided by the ABS and the focus of the analysis as such can be on modleling just the trend of the data and the causal impact of covid on this overall trend.  
+
+![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/timeseries.png?raw=true)
+Fig 1: 
+
+## Plots
+
+![a](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/linearforecast.png?raw=true)
+
+![t](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/causal_impact.png?raw=true)
 
 ## Causal impact calculations
 ```
@@ -51,19 +65,22 @@ Totalslaughteredimpactupper <- post_covid$NumberSlaughteredCATTLEexclcalvesTotal
 Totalslaughteredimpactlower <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhatlower
 
 # Estimate impact of Covid-19 over the forecast-able period.
-totalmean <- sum(Totalslaughteredimpact)
-totalupper <- sum(Totalslaughteredimpactupper)
-totallower <- sum(Totalslaughteredimpactlower)
+totalmean <- sum(Totalslaughteredimpact) * 1000
+totalupper <- sum(Totalslaughteredimpactupper) * 1000
+totallower <- sum(Totalslaughteredimpactlower) * 1000
 ```
+
 To calculate the causal impact 
 
-## Plots
-
-![a](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/linearforecast.png?raw=true)
-
-![t](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/causal_impact.png?raw=true)
 
 ## Real world impacts
+
+-  Beef production equated to 20% of the Austalian farm production a few year before covid (2016-2017). Also, the beef industry was valued at $12.7 billion (Australian dollars) to the Australian economy 
+
+- Tax levy 
+With the sale of cattle their is a $5 (Aus) dollar levy tax on each head of cattle with our estimates Covid-19 cost the Australian goverment anywhere from 13,316,392 to 60,767,606 in lost tax revenue.
+
+- Most Austalian cattle are kept for 18 months before slaughter a cow that is not slaughtered is costing more money in feeding and watering with any as profit that a cattle presents slowly being removed from the farmer. Feeding a fully grown cow brings no value to the farmer, 
 
 ## References
 
