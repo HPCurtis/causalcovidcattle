@@ -4,7 +4,7 @@
 The following analysis is investigation into whether Covid had any potential causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to analyse whether the number of cattle slaughtered was impacted by the Covid-19 pandemic. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis R packages that are simple brilliant.
 
 ## Data collection and cleaning.
-The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data collected is the number of slaughtered cattle excluding calves from each Austalian state with a total count also.
+The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data collected is the number of slaughtered cattle excluding calves from each Austalian state with and the total.
 ## Analysis
 
 ### Data splitting
@@ -40,7 +40,6 @@ As the code above shows the timeseries model applied to the timeseries data was 
 
 ![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/timeseries.png?raw=true)
 Fig 1: 
-
 ## Forecasts
 ```
 # Generate forecasts for the post-covid period.
@@ -80,14 +79,20 @@ totallower <- sum(Totalslaughteredimpactlower) * 1000
 
 To calculate the causal impact 
 
+|                        |Mean|Lower|Upper|
+|------------------------|------|---------|---|
+| Total Cattle Slaughtered|-7,408,400|-2,663,278|-12,153,521|
+| Total Tax Revenue Cost $(AUS)|37,041,999|13,316,392|60,767,606|
+
 
 ## Real world impacts
 
 -  Beef production equated to 20% of the Austalian farm production a few year before covid (2016-2017). Also, the beef industry was valued at $12.7 billion (Australian dollars) to the Australian economy 
 
 - Tax levy 
-With the sale of cattle their is a $5 (Aus) dollar levy tax on each head of cattle with our estimates Covid-19 cost the Australian goverment anywhere from 13,316,392 to 60,767,606 in lost tax revenue.
+With the sale of cattle their is a $5 (Aus) dollar levy tax on each head of cattle sold with our estimates Covid-19 cost the Australian goverment anywhere from 13,316,392 to 60,767,606 in lost tax revenue.
 
+Person and animal wealthcare considerations.
 - Most Austalian cattle are kept for 18 months before slaughter a cow that is not slaughtered is costing more money in feeding and watering with any as profit that a cattle presents slowly being removed from the farmer. Feeding a fully grown cow brings no value to the farmer, 
 
 ## References
