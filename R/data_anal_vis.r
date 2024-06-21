@@ -6,6 +6,7 @@ library(fable)
 df_og <- read.csv("https://raw.githubusercontent.com/HPCurtis/causalcovidcattle/main/data/cattle_og.csv")
 df_sa <- read.csv("https://raw.githubusercontent.com/HPCurtis/causalcovidcattle/main/data/cattle_sa.csv")
 
+# Convert to date form.
 df_og$Date <- as.Date(df_og$Date) 
 df_sa$Date <- as.Date(df_sa$Date) 
 
@@ -14,13 +15,13 @@ pre_covid <- df_sa %>%
   drop_na() %>%
   filter(Date < ymd("2020-03-01")) %>%
   mutate(Date = yearquarter(Date)) %>%
-  as_tsibble( index = Date)
+  as_tsibble(index = Date)
 
 post_covid <- df_sa %>%
   drop_na() %>%
   filter(Date >=  ymd("2020-03-01") )%>%
   mutate(Date = yearquarter(Date)) %>%
-  as_tsibble( index = Date)
+  as_tsibble(index = Date)
 
 # Visualisations for the project
 
@@ -31,16 +32,17 @@ dcmp <- drop_na(df_sa) |>
 
 components(dcmp) |> autoplot()
 
-
-# Fit forecast model for seasonal adjusted model.
+# Fit linear model for seasonal adjusted data.
 fitlinear <- pre_covid |>
   model(trend_model = TSLM(NumberSlaughteredCATTLEexclcalvesTotalState ~ trend()))
 
+# Generate forecasts for the post-covid period.
 fc <- fitlinear %>%
   forecast(h = nrow(post_covid)) %>%
   # Get forecast intervals
   hilo()
 
+# Convert Data column to approriate data type.
 fc$Date <- as_date(fc$Date)
 
 plinear <- fc %>% autoplot(drop_na(df_sa)) +
@@ -65,13 +67,12 @@ Totalslaughteredimpact <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState
 Totalslaughteredimpactupper <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhatupper 
 Totalslaughteredimpactlower <- post_covid$NumberSlaughteredCATTLEexclcalvesTotalState - yhatlower
 
-# Estimate impact of Covid over the forecast-able period.
+# Estimate impact of Covid-19 over the forecast-able period.
 totalmean <- sum(Totalslaughteredimpact)
 totalupper <- sum(Totalslaughteredimpactupper)
 totallower <- sum(Totalslaughteredimpactlower)
 
-# PLot of causal impact 
-
+# Plot of causal impact 
 causal_impact_plot <- ggplot() +
   geom_line(data = drop_na(df_sa), aes(x = Date, y = NumberSlaughteredCATTLEexclcalvesTotalState), color = "black") +
   geom_ribbon(data = fc, 
