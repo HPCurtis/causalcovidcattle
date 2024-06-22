@@ -5,7 +5,8 @@ The following analysis is an investigation into whether Covid-19 had any potenti
 
 ## Data collection and cleaning.
 The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data collected is the number of slaughtered cattle excluding calves from each Austalian state with the total for whole Australia calculated as well.
-## Analysis
+
+# Analysis
 
 ### Data splitting
 ```{r}
@@ -36,7 +37,7 @@ The R code above shows that to conduct the analysis here the data had to be spli
 fitlinear <- pre_covid |>
   model(trend_model = TSLM(NumberSlaughteredCATTLEexclcalvesTotalState ~ trend()))
 ```
-As the code above shows a linear model was applied to the timeseries data in order estiamte the ITS causal effect. 
+As the code above shows a linear model was applied to the timeseries data in order estimate the ITS causal effect estimate. 
 
 ### Model complexity
 This a simple example of an ITS analysis similar to that applied within the CausalPy package. As noted in their documentation more complex timeseries models can be applied to ITS anlayses. Non of these are applied here as the analysis is being conducted on the seasonally adjusted data provided by the ABS. Seasonal adjustments are very common within timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting varaiblity that in specific cases is not the focus of the analysis. This is the case with current analysis because we are interested in estimating a causal effect of Covid-19 on the total the number of cattle slaughtered across all Autralian States combined. So, by extracting seasonal variablity we are focusing on modelling the overall trend of the data and the causal impact of Covid-19 on this overall trend. Therefore, a linear model is approriate for this estimation task. The assumption of linearity might be potentially a strong one, but added complexity of non-linear models does not appear neccesary based on viewing the data in Fig 1. As the seasonally adjusted data shows the general overall increase in the number of cattle slaughtered through time that coicides with generally increased size and productivity of the cattle industry within Australia through time. 
@@ -82,7 +83,7 @@ totallower <- sum(Totalslaughteredimpactlower) * 1000
 
 The code above shows that to calculate the causal impact of COVID-19 from model estiamtes the forcast estiamtes $\hat{y}$ and the associated 95% predciton intervals as measure of uncertainty were extracted. The difference  between the $\hat{y}$ vales and their associated interval were subracted from observed post covid Total of cattle slaughtered. Table 1 shows the result of these calculations with a causal estimate of Covid on the number of cattle slaiughter being a reduction of anywhere between 2,663,278 and 12,153,521 head of cattle being slaughtered. With an estimated mean reduction of 7,408,400 head of cattle due to Covid-19.
 
-## Tax levy calulations
+## Tax levy calculations
 ```
 cattle_levy = 5 
 # Calculate tax revunue impact from causal estiamtes of cattle slaughter # numbers.
@@ -95,7 +96,8 @@ lost_revenue_lower = totallower * cattle_levy
 |------------------------|------|---------|---|
 | Total Cattle Slaughtered|-7,408,400|-2,663,278|-12,153,521|
 | Total Tax Revenue Cost $(AUS)|37,041,999|13,316,392|60,767,606|
-Table 1.
+
+Table 1. Causal estiamtes of impact on the total number on cattle slaughtered and the associated tax lost. With associated 95% prediction intervals for uncertainty estimation. 
 
 ## Real world impacts
 
