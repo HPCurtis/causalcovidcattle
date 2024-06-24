@@ -4,7 +4,7 @@
 The following analysis is an investigation into whether Covid-19 had a causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to evalauate this. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis R packages that are simple brilliant.
 
 ## Data collection and cleaning.
-The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data is the number of slaughtered cattle excluding calves from each Austalian state with the total for teh whole Australian calculated and the metric analysed here.
+The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data is the number of slaughtered cattle excluding calves from each Austalian state with the total for the whole of Australia calculated. The total is the primary focu of the analysis here.
 
 # Analysis
 
@@ -42,14 +42,14 @@ As the code above shows a linear model was applied to the timeseries data in ord
 ### Model complexity
 This a simple example of an ITS analysis similar to that applied within the CausalPy package. As noted in their documentation more complex timeseries models can be applied to ITS analysis. None of these are applied here as the analysis is being conducted on the seasonally adjusted data provided by the ABS.
 
- Seasonal adjustments are very common within timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting varaiblity that in specific cases is not the focus of the analysis.
+ Seasonal adjustments are very common within timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting variablity that in specific cases is not the focus of the analysis.
  
   This is the case with current analysis because we are interested in estimating a causal effect of Covid-19 on the total the number of cattle slaughtered across all Autralian States combined. So, by extracting seasonal variablity we are focusing on modelling the overall trend of the data and the causal impact of Covid-19 on this overall trend. Therefore, a linear model is approriate for this estimation task.
   
   Of course, the assumption of linearity might be potentially a strong one, but added complexity of non-linear models does not appear neccesary based on viewing the data in Fig 1. As the seasonally adjusted data shows the general overall increase in the number of cattle slaughtered through time that coincides with generally increased size and productivity of the cattle industry within Australia through time. 
 
 ![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/timeseries.png?raw=true)
-Fig 1: 
+Fig 1: Overall timeseries for ABS data on cattle salughter numbers pre and post COVID lockdown date.
 ## Forecasts
 ```
 # Generate forecasts for the post-covid period.
@@ -67,7 +67,7 @@ Fig 2: Plot of model forecast and prediction intervals
 
 
 ![t](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/causal_impact.png?raw=true)
-Fig 3: 
+Fig 3: Plot of estimated mean reductions in the total number of cattle slaughtered post COVID-19 Lockdowns. 
 
 ## Causal impact calculations
 ```
@@ -105,7 +105,7 @@ lost_revenue_lower = totallower * cattle_levy
 | Total Cattle Slaughtered|-7,408,400|-2,663,278|-12,153,521|
 | Total Tax Revenue Cost $(AUS)|37,041,999|13,316,392|60,767,606|
 
-Table 1. Causal estimates of impact on the total number on cattle slaughtered and the associated tax lost. With associated 95% prediction intervals for uncertainty estimation. 
+Table 1. Causal estimates of impact on the total number on cattle slaughtered post Coivd-19 and the associated tax lost. With associated 95% prediction intervals for uncertainty estimation. 
 
 ## Real world impacts
 
