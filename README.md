@@ -106,9 +106,6 @@ Table 1. Causal estiamtes of impact on the total number on cattle slaughtered an
 - Tax levy 
 Within Australia the sale of each head cattle their is a $5 (Aus) dollar levy tax on each head of cattle sold. The modle estimates here suggest a Covid-19 cost to the Australian goverment anywhere from 13,316,392 to 60,767,606 in lost tax revenue.
 
-Person and animal wealthcare considerations.
-- Most Austalian cattle are kept for 18 months before slaughter a cow that is not slaughtered is costing more money in feeding and watering with any as profit that a cattle presents slowly being removed from the farmer. Feeding a fully grown cow brings no value to the farmer, 
-
 ## References
 
 Hyndman, R.J., & Athanasopoulos, G. (2021) *Forecasting: principles and practice*, 3rd edition, OTexts: Melbourne, Australia. OTexts.com/fpp3. Accessed on UTD.
