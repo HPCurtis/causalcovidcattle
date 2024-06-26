@@ -104,8 +104,8 @@ lost_revenue_lower = totallower * cattle_levy
 |------------------------|------|---------|---|
 | Total Cattle Slaughtered Linear|-7,408,400|-2,663,278|-12,153,521|
 | Total Tax Revenue Cost $(AUS) Linear|37,041,999|13,316,392|60,767,606|
-| Total Cattle Slaughtered GAM|-7,408,400|-2,663,278|-12,153,521|
-| Total Tax Revenue Cost $(AUS) GAM|37,041,999|13,316,392|60,767,606|
+| Total Cattle Slaughtered GAM|-5,526,122|-2,707,164|-8,345,080|
+| Total Tax Revenue Cost $(AUS) GAM|27,630,611|13,535,822|41,725,400|
 
 Table 1. Causal estimates of impact on the total number on cattle slaughtered post Coivd-19 and the associated tax lost. With associated 95% prediction intervals for uncertainty estimation. 
 

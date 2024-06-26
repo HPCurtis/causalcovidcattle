@@ -68,6 +68,12 @@ totalmean <- sum(Totalslaughteredimpact) * 1000
 totalupper <- sum(Totalslaughteredimpactupper) * 1000
 totallower <- sum(Totalslaughteredimpactlower) * 1000
 
+#Tax levy calculation.
+cattle_levy = 5 
+lost_revenue_mean = totalmean * cattle_levy
+lost_revenue_upper = totalupper * cattle_levy
+lost_revenue_lower = totallower * cattle_levy
+
 # Model plots----
 fitgam %>% draw() + xlab()
 fitgam %>% appraise()
