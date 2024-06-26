@@ -1,7 +1,7 @@
 # Causal impact of Covid-19 on Australian Cattle livestock slaughter numbers
 
 ## Background and Overview
-The following analysis is an investigation into whether Covid-19 had a causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to evalauate this. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis R packages that are simple brilliant.
+The following analysis is an investigation into whether Covid-19 had a causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to evaluate this. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis R packages that are simple brilliant.
 
 ## Data collection and cleaning.
 The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data is the number of slaughtered cattle excluding calves from each Austalian state with the total for the whole of Australia calculated. The total is the primary focu of the analysis here.
@@ -120,11 +120,13 @@ Within Australia the sale of each head cattle their is a $5 (Aus) dollar levy ta
 
 Clark, N. J., & Wells, K. (2023). Dynamic generalised additive models (DGAMs) for forecasting discrete ecological time series. Methods in Ecology and Evolution, 14(3), 771-784.
 
-Hyndman, R.J., & Athanasopoulos, G. (2021) *Forecasting: principles and practice*, 3rd edition, OTexts: Melbourne, Australia. OTexts.com/fpp3. Accessed on UTD.
-
 Facure, M. (2022). *Causal inference for the Brave and the True*. Self Published.
 
+Hyndman, R.J., & Athanasopoulos, G. (2021) *Forecasting: principles and practice*, 3rd edition, OTexts: Melbourne, Australia. OTexts.com/fpp3. Accessed on UTD.
+
 Simpson, G. L. (2018). Modelling palaeoecological time series using generalised additive models. Frontiers in Ecology and Evolution, 6, 149.
+
+Thompson, E. (2022). *How to escape from model land. How mathematical models can lead us astray and what we can do about. Basic Books.
 
 Web resources
 
