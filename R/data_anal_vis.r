@@ -10,10 +10,12 @@ df_sa <- read.csv("https://raw.githubusercontent.com/HPCurtis/causalcovidcattle/
 # Convert to date form.
 df_sa$Date <- as.Date(df_sa$Date) 
 
+# Set up data for all following code.
 df_sa <- df_sa %>% drop_na() %>% 
   as_tsibble( index = Date) %>% 
   mutate(Date = yearquarter(Date)) 
 
+# Plot the tiemseries basically.
 timeseries_plot <- ggplot() +
   geom_line(data = df_sa, aes(x = Date, y = NumberSlaughteredCATTLEexclcalvesTotalState), color = "blue", linetype = "solid") +
   geom_vline(xintercept = as.Date("2020-03-01"), color = "red", linetype = "dashed") +
@@ -80,7 +82,7 @@ totalmean <- sum(Totalslaughteredimpact) * 1000
 totalupper <- sum(Totalslaughteredimpactupper) * 1000
 totallower <- sum(Totalslaughteredimpactlower) * 1000
 
-# Tax levy losst calacaution 
+# Tax levy loss calculation.
 cattle_levy = 5 
 lost_revenue_mean = totalmean * cattle_levy
 lost_revenue_upper = totalupper * cattle_levy
@@ -88,10 +90,10 @@ lost_revenue_lower = totallower * cattle_levy
 
 # Plot of causal impact 
 causal_impact_plot <- ggplot() +
-  geom_line(data = drop_na(df_sa), aes(x = Date, y = NumberSlaughteredCATTLEexclcalvesTotalState), color = "black") +
+  geom_line(data = drop_na(df_sa), aes(x = Date, y = NumberSlaughteredCATTLEexclcalvesTotalState), color = "blue") +
   geom_ribbon(data = fc, 
               aes(x = Date, ymin =  post_covid$NumberSlaughteredCATTLEexclcalvesTotalState),
-                  ymax = yhat, fill = "blue", alpha = 0.2) +
+                  ymax = yhat, fill = "red", alpha = 1) +
   labs(y = "Number of Cattle Slaughtered ('000)", 
        title = "Total number of cattle (excl calves) across all Australian States") +
   theme(
@@ -103,6 +105,7 @@ causal_impact_plot <- ggplot() +
   annotate("text", x = yearquarter("2000 Q2"), y = max(df_sa$NumberSlaughteredCATTLEexclcalvesTotalState) * 1.05, label = "Pre-COVID", color = "black", size = 2) +
   annotate("text", x = yearquarter("2023 Q2"), y = max(df_sa$NumberSlaughteredCATTLEexclcalvesTotalState) * 1.05, label = "Post-COVID", color = "black", size = 2)
 
+# Create table for saving and presentation in the README file to be uploaded.
 
   # Save plots out-----
 ggsave(filename = "/home/harrison/Desktop/gitHubRepos/cattlecovidcausal/img/timeseries.png",
