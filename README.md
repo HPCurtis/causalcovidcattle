@@ -109,7 +109,7 @@ fitgam <- gam(TotalState ~ s(t), method = "REML", data = df_sapre)
 ```
 
 ![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/gamforecast.png?raw=true)
-![y](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/gamforecast.png?raw=true)
+![y](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/causal_impact_gam.png?raw=true)
 
 ## Model results
 
