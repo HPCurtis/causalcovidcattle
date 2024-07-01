@@ -30,7 +30,8 @@ post_covid <- df_sa %>%
 ```
 The R code above shows that to conduct the analysis here the data had to be split between pre and post Covid-19. The date of 2020-03-01 was the date selected to be in line with Australias' Covid lockdowns (March 23, 2020) and the fidelity of sampling (quarterly) within the data collected by the ABS (Quarterly).
 
-### Modelling
+### Linear Modelling
+
 
 ```
 # Fit linear model for seasonal adjusted data.
@@ -39,7 +40,6 @@ fitlinear <- pre_covid |>
 ```
 As the code above shows a linear model was applied to the timeseries data in order estimate the causal effect. 
 
-### Model complexity
 This a simple example of an ITS analysis similar to that applied within the CausalPy package. As noted in their documentation more complex timeseries models can be applied to ITS analysis. None of these are applied here as the analysis is being conducted on the seasonally adjusted data provided by the ABS.
 
  Seasonal adjustments are very common within timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting variablity that in specific cases is not the focus of the analysis.
@@ -100,6 +100,19 @@ lost_revenue_upper = totalupper * cattle_levy
 lost_revenue_lower = totallower * cattle_levy
 ```
 
+### Generalised additive modelling
+The following plots are the result of using the MGCV package and associated methods to fit a additive model to avoid repetition not all of the code is not provided in detail here. See, the R directory within the repository for that. But much of it is just variation of the same general workflow.
+
+```
+# Fit of genralied additive model smoother on timeseries data denoted s(t) using mgcv.
+fitgam <- gam(TotalState ~ s(t), method = "REML", data = df_sapre)
+```
+
+![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/gamforecast.png?raw=true)
+![y](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/gamforecast.png?raw=true)
+
+## Model results
+
 |                        |Mean|Lower|Upper|
 |------------------------|------|---------|---|
 | Total Cattle Slaughtered Linear|-7,408,400|-2,663,278|-12,153,521|
@@ -126,7 +139,7 @@ Hyndman, R.J., & Athanasopoulos, G. (2021) *Forecasting: principles and practice
 
 Simpson, G. L. (2018). Modelling palaeoecological time series using generalised additive models. Frontiers in Ecology and Evolution, 6, 149.
 
-Thompson, E. (2022). *How to escape from model land. How mathematical models can lead us astray and what we can do about. Basic Books.
+Thompson, E. (2022). *How to escape from model land. How mathematical models can lead us astray and what we can do about.* Basic Books.
 
 Web resources
 
