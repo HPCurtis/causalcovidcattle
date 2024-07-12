@@ -101,7 +101,7 @@ lost_revenue_lower = totallower * cattle_levy
 ```
 
 ### Generalised additive modelling
-The following plots are the result of using the MGCV package and associated methods to fit a additive model. To avoid repetition not all of the code is provided in detail here. See, the R directory within the repository for that. But much of it is just variation of the same general workflow.
+The following plots are the result of using the MGCV package and associated methods to fit a additive model to timeseries data (Clarke & Wells, 2023; Simpson, 2018) in additon to value that application of multiple models can help understand uncertain outcomes such as this one Thompson (2022). To avoid repetition not all of the code is provided in detail here. See, the R directory within the repository for that. But much of it is just variation of the same general workflow.
 
 ```
 # Fit of generalied additive model smoother on timeseries data denoted s(t) using mgcv.
@@ -127,7 +127,7 @@ Table 1. Causal estimates of impact on the total number on cattle slaughtered po
 -  Beef production equated to 20% of the Australian farm production a few year before Covid (2016-2017). Also, the beef industry was valued at $12.7 billion (Australian dollars) to the Australian economy 
 
 - Tax levy 
-Within Australia the sale of each head cattle their is a $5 (Aus) dollar levy tax on each head of cattle sold. The model estimates here suggest a Covid-19 cost to the Australian goverment anywhere from 13,316,392 to 60,767,606 (based linear model) or 13,535,822 to 41,725,400 (GAM model) in lost tax revenue.
+Within Australia the sale of each head cattle their is a $5 (Aus) dollar levy tax on each head of cattle sold. The model estimates here suggest a Covid-19 cost to the Australian goverment anywhere from $13,316,392 to $60,767,606 (based linear model) or $13,535,822 to $41,725,400 (GAM model) in lost tax revenue.
 
 ## References
 
