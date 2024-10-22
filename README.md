@@ -101,7 +101,7 @@ lost_revenue_lower = totallower * cattle_levy
 ```
 
 ### Generalised additive modelling
-The following plots are the result of using the MGCV package and associated methods to fit a additive model to timeseries data (Clarke & Wells, 2023; Simpson, 2018) in additon to value that application of multiple models can help understand uncertain outcomes such as this one Thompson (2022). To avoid repetition not all of the code is provided in detail here. See, the R directory within the repository for that. But much of it is just variation of the same general workflow.
+The following plots are the result of using the MGCV package and associated methods to fit a generalised additive model to timeseries data (Clarke & Wells, 2023; Simpson, 2018). The application of multiple models can help understand uncertain outcomes such as this one Thompson (2022). To avoid repetition not all of the code is provided in detail here. See, the R directory within the repository for that. But much of it is just variation of the same general workflow.
 
 ```
 # Fit of generalied additive model smoother on timeseries data denoted s(t) using mgcv.
