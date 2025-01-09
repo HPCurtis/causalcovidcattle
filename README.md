@@ -4,7 +4,7 @@
 The following analysis is an investigation into whether Covid-19 had a causal impact on the Australian cattle market in the form of the number of cattle that were slaughtered. Specifically, the analysis here uses an interupted time-series (ITS) quasi-experimental methodology to evaluate this. The following work is highly inspired by the work of [Rami Kasparin](https://ramikrispin.github.io/2021/01/covid19-effect/), [Matheus Facure](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) and the work of [CausalPy and all its developers](https://causalpy.readthedocs.io/en/stable/examples.html#interrupted-time-series) and generally [Hyndman & Athanasopoulos](https://otexts.com/fpp3/) incredible book and their associated timeseries analysis R packages that are simple brilliant.
 
 ## Data collection and cleaning.
-The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data is the number of slaughtered cattle excluding calves from each Austalian state with the total for the whole of Australia calculated. The total is the primary focu of the analysis here.
+The data used within the analysis is taken from the [Austalian Bureau of Statistics (ABS)](https://www.abs.gov.au/statistics/industry/agriculture/livestock-products-australia/latest-release). Here the data is the number of slaughtered cattle excluding calves from each Austalian state with the total for the whole of Australia calculated. The total is the primary focus of the analysis here.
 
 # Analysis
 
@@ -44,12 +44,14 @@ This a simple example of an ITS analysis similar to that applied within the Caus
 
  Seasonal adjustments are very common within timeseries analyses (Hyndham & Athanasopoulos, 2021) they allow for modelling of the data to be easier by extracting variablity that in specific cases is not the focus of the analysis.
  
-  This is the case with current analysis because we are interested in estimating a causal effect of Covid-19 on the total the number of cattle slaughtered across all Autralian States combined. So, by extracting seasonal variablity we are focusing on modelling the overall trend of the data and the causal impact of Covid-19 on this overall trend. Therefore, general linear (additive) mdoel is approriate for this estimation task.
+  This is the case with current analysis because we are interested in estimating a causal effect of Covid-19 on the total the number of cattle slaughtered across all Autralian States combined. So, by extracting seasonal variablity we are focusing on modelling the overall trend of the data and the causal impact of Covid-19 on this overall trend. Therefore, general linear (additive) models are apropriate for this estimation task.
   
   Of course, the assumption of linearity might be potentially a strong one. However, the seasonally adjusted data shows the general overall increase in the number of cattle slaughtered through time that coincides with generally increased size and productivity of the cattle industry within Australia through time. 
 
 ![x](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/timeseries.png?raw=true)
+
 Fig 1: Overall timeseries for ABS data on cattle slaughter numbers pre and post COVID lockdown date.
+
 ## Forecasts
 ```
 # Generate forecasts for the post-covid period.
@@ -63,10 +65,12 @@ fc <- fitlinear %>%
 The number of forecast step values that were generated is the same as number of avaivible data points Post-Covid Recorded by the ABS. This was for 16 Quarters, so, three years post Covid-19 as defined by lockdown start.
 
 ![a](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/linearforecast.png?raw=true)
+
 Fig 2: Plot of model forecast and prediction intervals
 
 
 ![t](https://github.com/HPCurtis/causalcovidcattle/blob/main/img/causal_impact.png?raw=true)
+
 Fig 3: Plot of estimated mean reductions in the total number of cattle slaughtered post COVID-19 Lockdowns. 
 
 ## Causal impact calculations
@@ -101,6 +105,7 @@ lost_revenue_lower = totallower * cattle_levy
 ```
 
 ### Generalised additive modelling
+
 The following plots are the result of using the MGCV package and associated methods to fit a generalised additive model to timeseries data (Clarke & Wells, 2023; Simpson, 2018). The application of multiple models can help understand uncertain outcomes such as this one Thompson (2022). To avoid repetition not all of the code is provided in detail here. See, the R directory within the repository for that. But much of it is just variation of the same general workflow.
 
 ```
@@ -127,7 +132,7 @@ Table 1. Causal estimates of impact on the total number on cattle slaughtered po
 -  Beef production equated to 20% of the Australian farm production a few year before Covid (2016-2017). Also, the beef industry was valued at $12.7 billion (Australian dollars) to the Australian economy 
 
 - Tax levy 
-Within Australia the sale of each head cattle their is a $5 (Aus) dollar levy tax on each head of cattle sold. The model estimates here suggest a Covid-19 cost to the Australian goverment anywhere from $13,316,392 to $60,767,606 (based linear model) or $13,535,822 to $41,725,400 (GAM model) in lost tax revenue.
+Within Australia the sale of each head cattle results in a $5 (Aus) dollar levy tax on each head of cattle sold. The model estimates here suggest a Covid-19 cost to the Australian goverment anywhere from $13,316,392 to $60,767,606 (based linear model) or $13,535,822 to $41,725,400 (GAM model) in lost tax revenue.
 
 ## References
 
